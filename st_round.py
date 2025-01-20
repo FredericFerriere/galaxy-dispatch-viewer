@@ -72,7 +72,7 @@ def display_rounds(rounds_path):
     )
 
 parcels_path = r'C:\Users\frede\Galaxy_dev\test_data\outputs'
-mode_path = r'C:\Users\frede\Galaxy_dev\test_data\outputs\van'
+mode_path = r'C:\Users\frede\Galaxy_dev\test_data\outputs\bike'
 
 load_data(parcels_path, mode_path)
 display_rounds(mode_path)
