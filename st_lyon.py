@@ -29,13 +29,13 @@ def get_radius_layer(latitude, longitude, radius):
 
 def get_stops_layer(latitude, longitude, radius):
     reachable_stops = st.session_state.bus_network.reachable_stops(latitude, longitude, radius)
-    stop_points = [{'latitude': st.session_state.bus_network.bus_stops[stop_id].latitude,
-                    'longitude': st.session_state.bus_network.bus_stops[stop_id].longitude}
-                   for stop_id in reachable_stops]
+#    stop_points = [{'latitude': st.session_state.bus_network.bus_stops[stop_id].latitude,
+#                    'longitude': st.session_state.bus_network.bus_stops[stop_id].longitude}
+#                   for stop_id in reachable_stops]
     stops_layer = pdk.Layer(
         'ScatterplotLayer',
-        data=stop_points,
-        get_position=['longitude', 'latitude'],
+        data=reachable_stops,
+        get_position=['stop_lon', 'stop_lat'],
         get_radius=20,
         get_color=[255, 0, 0, 255]
     )
