@@ -98,15 +98,20 @@ class BusNetwork:
                                     usecols=['trip_id', 'stop_id'],
                                     dtype={'trip_id': str,
                                            'stop_id': str})
-        #df_trips = pd.read_csv(os.path.join(bn_path, 'trips.txt'), sep=',')
-        #df_routes = pd.read_csv(os.path.join(bn_path, 'routes.txt'),sep=',')
+        df_trips = pd.read_csv(os.path.join(bn_path, 'trips.txt'), sep=',')
+        df_routes = pd.read_csv(os.path.join(bn_path, 'routes.txt'),sep=',')
+
+#        df_routes = df_routes[df_routes['route_short_name']=='C25']
 
         df_stops['distance'] = np.vectorize(BusNetwork.distance_vec)(latitude, longitude,
                                                                      df_stops['stop_lat'], df_stops['stop_lon'])
         df_close_stops = df_stops[df_stops['distance']<=radius]
         df_eligible_trips = pd.merge(df_close_stops, df_stop_times)
+        eligible_trips_id = df_eligible_trips['trip_id'].unique()
 
-        eligible_stops = df_stop_times[df_stop_times['trip_id'].isin(df_eligible_trips['trip_id'].unique())]['stop_id'].unique()
+        eligible_stops = df_stop_times[df_stop_times['trip_id'].isin(eligible_trips_id)]['stop_id'].unique()
+        eligible_routes = df_trips[df_trips['trip_id'].isin(eligible_trips_id)]['route_id'].unique()
+        routes_data = df_routes[df_routes['route_id'].isin(eligible_routes)][['route_id', 'route_short_name', 'route_long_name']]
 
-        return df_stops[df_stops['stop_id'].isin(eligible_stops)]
+        return df_stops[df_stops['stop_id'].isin(eligible_stops)], routes_data
 
