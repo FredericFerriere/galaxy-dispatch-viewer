@@ -1,5 +1,3 @@
-import os
-
 from enum import Enum
 
 import rounds

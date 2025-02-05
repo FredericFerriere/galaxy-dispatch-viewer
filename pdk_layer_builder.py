@@ -8,6 +8,22 @@ import parcels as ps
 #warehouse_icon_url = 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Warehouse_Icon.png'
 #warehouse_icon_url = 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png'
 
+def draw_map(initial_lat, initial_lon, all_layers):
+
+    st.pydeck_chart(
+        pdk.Deck(
+            map_style='road',
+            initial_view_state=pdk.ViewState(
+                latitude=initial_lat,
+                longitude=initial_lon,
+                zoom=11,
+                pitch=0,
+            ),
+            layers=all_layers
+        )
+    )
+    return
+
 def get_warehouse_layer():
     all_clients = st.session_state.clients
 
@@ -81,3 +97,19 @@ def get_rounds_layer(current_model):
         round_layers.append(round_layer)
 
     return round_layers
+
+def get_point_layer(point_latitude, point_longitude):
+
+    point = [{'latitude': point_latitude,
+              'longitude': point_longitude}]
+
+    point_layer = pdk.Layer(
+        'ScatterplotLayer',
+        data=point,
+        get_position=['longitude', 'latitude'],
+        get_radius=50,
+        get_color=[255, 0, 0, 255]
+    )
+
+    return point_layer
+
