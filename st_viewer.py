@@ -20,7 +20,8 @@ pg = st.navigation({
     "Maps": [st.Page('st_client_parcels.py', title='View Delivery Data'),
              st.Page('st_van_model.py', title='View Van Model Data'),
              st.Page('st_bike_model.py', title='View Bike Model Data'),
-             st.Page('st_bus_bike_model.py', title='View Bus + Bike Model Data')]
+             st.Page('st_bike_bus_zoned_model.py', title='View Bike + Bus Zoned Model Data'),
+             st.Page('st_bike_bus_line_model.py', title='View Bike + Bus Line Model Data')]
 })
 
 pg.run()

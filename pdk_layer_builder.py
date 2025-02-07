@@ -88,7 +88,7 @@ def get_rounds_layer(current_model):
             data=[{'path': [[cur_round.start_longitude, cur_round.start_latitude]]
                            + [[ps.Parcels.parcel_dict[el].delivery_longitude,
                                ps.Parcels.parcel_dict[el].delivery_latitude] for el in cur_round.parcel_ids]
-                           + [[cur_round.start_longitude, cur_round.start_latitude]]}],
+                           + [[cur_round.end_longitude, cur_round.end_latitude]]}],
             get_width=30,
             #            width_scale=20,
             get_path='path',
