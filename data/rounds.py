@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-import round as r
+from data import round as r
+
 
 class Rounds:
 

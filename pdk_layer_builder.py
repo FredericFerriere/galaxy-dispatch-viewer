@@ -3,7 +3,9 @@ import random
 import streamlit as st
 import pydeck as pdk
 
-import parcels as ps
+import data.clients as cs
+import data.parcels as ps
+
 
 #warehouse_icon_url = 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Warehouse_Icon.png'
 #warehouse_icon_url = 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png'
@@ -25,7 +27,7 @@ def draw_map(initial_lat, initial_lon, all_layers):
     return
 
 def get_warehouse_layer():
-    all_clients = st.session_state.clients
+    all_clients = cs.Clients.get_clients()
 
     cw_point = [{'latitude': v.latitude,
                  'longitude': v.longitude,
@@ -40,28 +42,9 @@ def get_warehouse_layer():
 
     return cw_layer
 
-def get_warehouse_layer_2():
-    all_clients = st.session_state.clients
-
-    cw_point = [{'latitude': v.latitude,
-                 'longitude': v.longitude,
-                 } for v in all_clients.client_dict.values()]
-    cw_layer = pdk.Layer(
-        'IconLayer',
-        data=cw_point,
-        get_position=['longitude', 'latitude'],
-        get_icon='marker',
-        get_size=40,
-        icon_atlas='https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
-        icon_mapping='https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.json',
-        get_color=[255, 0, 120],
-        pickable=True,
-    )
-
-    return cw_layer
 
 def get_parcel_layer():
-    all_parcels = st.session_state.parcels
+    all_parcels = ps.Parcels.get_parcels()
 
     parcel_point = [{'latitude': v.delivery_latitude,
                  'longitude': v.delivery_longitude,

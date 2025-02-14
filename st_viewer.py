@@ -2,8 +2,9 @@ import os
 
 import streamlit as st
 
-import clients as cs
-import parcels as ps
+st.set_page_config(layout='wide')
+
+from data import clients as cs, parcels as ps
 import constants as co
 
 if 'clients' not in st.session_state:
@@ -17,11 +18,12 @@ if 'parcels' not in st.session_state:
     st.session_state.parcels = all_parcels
 
 pg = st.navigation({
-    "Maps": [st.Page('st_client_parcels.py', title='View Delivery Data'),
-             st.Page('st_van_model.py', title='View Van Model Data'),
-             st.Page('st_bike_model.py', title='View Bike Model Data'),
-             st.Page('st_bike_bus_zoned_model.py', title='View Bike + Bus Zoned Model Data'),
-             st.Page('st_bike_bus_line_model.py', title='View Bike + Bus Line Model Data')]
+    "Maps": [st.Page('views/st_client_parcels.py', title='View Delivery Data'),
+             st.Page('views/st_van_model.py', title='View Van Model Data'),
+             st.Page('views/st_bike_model.py', title='View Bike Model Data'),
+             st.Page('views/st_bike_bus_zoned_model.py', title='View Bike + Bus Zoned Model Data'),
+             st.Page('views/st_bike_bus_line_model.py', title='View Bike + Bus Line Model Data'),
+             st.Page('views/st_model_comparison.py', title='Model Comparison')]
 })
 
 pg.run()
