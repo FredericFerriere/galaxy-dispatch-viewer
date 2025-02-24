@@ -5,5 +5,6 @@ MODEL_MAP = {'van':['van', 'Van'],
             'bike':['bike', 'Bike'],
             'bike_bus_zoned':['bike_bus_zoned', 'Bike & Bus Zoned'],
             'bike_bus_line':['bike_bus_line', 'Bike & Bus Line'],
-            'bike_bus_hub':['bike_bus_hub', 'Bike & Bus Hub']
+            'bike_bus_hub':['bike_bus_hub', 'Bike & Bus Hub'],
+            'bike_bus_zoned_line':['bike_bus_zoned_line', 'Bike & Bus Zoned Line']
              }

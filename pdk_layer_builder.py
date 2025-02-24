@@ -64,7 +64,12 @@ def get_rounds_layer(current_model):
     random.seed(7878)
     round_layers = []
 
-    for cur_round in current_model.rounds.round_dict.values():
+    if current_model.model_name=='bike_bus_hub':
+        round_list = [current_model.rounds.round_dict[24]]
+    else:
+        round_list = current_model.rounds.round_dict.values()
+
+    for cur_round in round_list:
         round_layer = pdk.Layer(
             'PathLayer',
             #            positionFormat= 'XY',

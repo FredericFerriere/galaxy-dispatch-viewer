@@ -24,6 +24,7 @@ pg = st.navigation({
              st.Page('views/st_bike_bus_zoned_model.py', title='View Bike + Bus Zoned Model Data'),
              st.Page('views/st_bike_bus_line_model.py', title='View Bike + Bus Line Model Data'),
              st.Page('views/st_bike_bus_hub_model.py', title='View Bike + Bus Hub Model Data'),
+             st.Page('views/st_bike_bus_zoned_line_model.py', title='View Bike + Bus Zoned Line Model Data'),
              st.Page('views/st_model_comparison.py', title='Model Comparison')]
 })
 
