@@ -26,12 +26,11 @@ def draw_map(initial_lat, initial_lon, all_layers):
     )
     return
 
-def get_warehouse_layer():
-    all_clients = cs.Clients.get_clients()
+def get_warehouse_layer(client_ids):
 
-    cw_point = [{'latitude': v.latitude,
-                 'longitude': v.longitude,
-                 } for v in all_clients.client_dict.values()]
+    cw_point = [{'latitude': cs.Clients.get_client(c_id).latitude,
+                 'longitude': cs.Clients.get_client(c_id).longitude,
+                 } for c_id in client_ids]
     cw_layer = pdk.Layer(
         'ScatterplotLayer',
         data=cw_point,
@@ -43,12 +42,12 @@ def get_warehouse_layer():
     return cw_layer
 
 
-def get_parcel_layer():
+def get_parcel_layer(parcel_ids):
     all_parcels = ps.Parcels.get_parcels()
 
-    parcel_point = [{'latitude': v.delivery_latitude,
-                 'longitude': v.delivery_longitude,
-                 } for v in all_parcels.parcel_dict.values()]
+    parcel_point = [{'latitude': ps.Parcels.get_parcel(p_id).delivery_latitude,
+                 'longitude': ps.Parcels.get_parcel(p_id).delivery_longitude,
+                 } for p_id in parcel_ids]
 
     parcel_layer = pdk.Layer(
         'ScatterplotLayer',
@@ -60,22 +59,18 @@ def get_parcel_layer():
 
     return parcel_layer
 
-def get_rounds_layer(current_model):
+def get_rounds_layer(current_model, round_ids):
     random.seed(7878)
     round_layers = []
 
-    if current_model.model_name=='bike_bus_hub':
-        round_list = [current_model.rounds.round_dict[24]]
-    else:
-        round_list = current_model.rounds.round_dict.values()
-
-    for cur_round in round_list:
+    for round_id in round_ids:
+        cur_round = current_model.get_round(round_id)
         round_layer = pdk.Layer(
             'PathLayer',
             #            positionFormat= 'XY',
             data=[{'path': [[cur_round.start_longitude, cur_round.start_latitude]]
-                           + [[ps.Parcels.parcel_dict[el].delivery_longitude,
-                               ps.Parcels.parcel_dict[el].delivery_latitude] for el in cur_round.parcel_ids]
+                           + [[ps.Parcels.get_parcel(el).delivery_longitude,
+                               ps.Parcels.get_parcel(el).delivery_latitude] for el in cur_round.parcel_ids]
                            + [[cur_round.end_longitude, cur_round.end_latitude]]}],
             get_width=30,
             #            width_scale=20,

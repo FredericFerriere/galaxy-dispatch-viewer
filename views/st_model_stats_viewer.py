@@ -9,3 +9,5 @@ def view_model_stats(cur_model):
     df.set_index('metrics_name', inplace=True)
 
     st.table(df)
+
+

@@ -1,6 +1,6 @@
 
 
-class Round():
+class Round:
 
     def __init__(self, round_id, start_latitude, start_longitude, end_latitude, end_longitude):
         self.id = round_id

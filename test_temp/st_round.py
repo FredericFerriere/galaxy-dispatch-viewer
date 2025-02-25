@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 import pydeck as pdk
 
-from data import parcels as ps, rounds as rs
+from data import parcels as ps, round_holder as rs
 
 
 def load_data(parcels_path, rounds_path):

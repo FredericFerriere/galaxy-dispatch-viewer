@@ -24,3 +24,12 @@ class Clients:
             all_clients.load_data(os.path.join(co.ROOT_PATH, 'clients.csv'))
             st.session_state.clients = all_clients
         return st.session_state.clients
+
+    @staticmethod
+    def get_client(client_id):
+        return Clients.get_clients().client_dict[client_id]
+
+    @staticmethod
+    def client_ids():
+        all_clients = Clients.get_clients()
+        return list(all_clients.client_dict.keys())

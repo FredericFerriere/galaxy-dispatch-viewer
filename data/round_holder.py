@@ -3,7 +3,7 @@ import pandas as pd
 from data import round as r
 
 
-class Rounds:
+class RoundHolder:
 
     def __init__(self):
         self.round_dict = {}
