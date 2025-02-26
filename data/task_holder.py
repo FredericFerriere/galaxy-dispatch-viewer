@@ -40,4 +40,7 @@ class TaskHolder:
             new_task = ta.LocalRound(row['task_id'], start_loc, end_loc, row['round_id'], row['agent_id'])
             self.task_dict[new_task.id] = new_task
 
+    def get_task(self, task_id):
+        return self.task_dict[task_id]
+
 

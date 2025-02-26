@@ -18,3 +18,6 @@ class RoundHolder:
         df_rs.sort_values(['round_id', 'sequence_number'], inplace=True)
         for _, row in df_rs.iterrows():
             self.round_dict[row['round_id']].add_parcel(row['parcel_id'])
+
+    def get_round(self, round_id):
+        return self.round_dict[round_id]

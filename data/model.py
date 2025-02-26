@@ -5,17 +5,14 @@ import pandas as pd
 import streamlit as st
 
 import constants as co
-import data.round_holder as rh
+import data.agent_holder as ah
 import data.model_stats as ms
 import data.parcels as ps
+import data.round_holder as rh
+import data.route_holder as rth
+import data.task as ta
 import data.task_holder as th
 
-
-#class ModelType(Enum):
-#    VAN = 0
-#    BIKE = 1
-#    BIKE_BUS_ZONED = 2
-#    BIKE_BUS_LINE = 3
 
 class Model:
 
@@ -26,11 +23,15 @@ class Model:
         self.display_name = display_name
         self.round_holder = rh.RoundHolder()
         self.task_holder = th.TaskHolder()
+        self.agent_holder = ah.AgentHolder()
+        self.route_holder = rth.RouteHolder()
 
     def load_data(self, root_path):
         model_path = os.path.join(root_path, self.folder_name)
         self.round_holder.load_data(model_path)
         self.task_holder.load_data(model_path)
+        self.agent_holder.load_data(model_path)
+        self.route_holder.load_data(model_path)
         self.model_stats.load_data(model_path)
 
     @staticmethod
@@ -44,14 +45,25 @@ class Model:
         return st.session_state.models[model_name]
 
     def get_round(self, round_id):
-        return self.round_holder.round_dict[round_id]
+        return self.round_holder.get_round(round_id)
 
-    def client_round_df(self):
-        client_ids, round_ids = [], []
-        for k, v in self.round_holder.round_dict.items():
-            client_ids.append(ps.Parcels.get_parcel(v.parcel_ids[0]).client_id)
-            round_ids.append(k)
-        return pd.DataFrame({'client_id':client_ids, 'round_id':round_ids})
+    def get_agent(self, agent_id):
+        return self.agent_holder.get_agent(agent_id)
+
+    def get_task(self, task_id):
+        return self.task_holder.get_task(task_id)
+
+    def get_path(self, start_lat, start_lon, end_lat, end_lon, move_mode):
+        return self.route_holder.get_path(start_lat, start_lon, end_lat, end_lon, move_mode)
+
+    def client_round_task_df(self):
+        client_ids, task_ids = [], []
+        for k, v in self.task_holder.task_dict.items():
+            if v.task_type in [ta.TaskType.LOCAL_ROUND, ta.TaskType.IMPORTED_ROUND]:
+                t_round = self.round_holder.get_round(v.delivery_round_id)
+                client_ids.append(ps.Parcels.get_parcel(t_round.parcel_ids[0]).client_id)
+                task_ids.append(k)
+        return pd.DataFrame({'client_id':client_ids, 'task_id':task_ids})
 
 
     @staticmethod

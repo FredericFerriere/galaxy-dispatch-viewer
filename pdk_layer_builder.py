@@ -59,19 +59,20 @@ def get_parcel_layer(parcel_ids):
 
     return parcel_layer
 
-def get_rounds_layer(current_model, round_ids):
+def get_rounds_layer(current_model, task_ids):
     random.seed(7878)
     round_layers = []
 
-    for round_id in round_ids:
-        cur_round = current_model.get_round(round_id)
+    for t_id in task_ids:
+        cur_task = current_model.get_task(t_id)
+        cur_round = current_model.get_round(cur_task.delivery_round_id)
+        lat_lon_path = cur_round.get_path(current_model, current_model.get_agent(cur_task.agent_id).move_mode)
+        format_path = [[el['start_lon'], el['start_lat']] for el in lat_lon_path]
+
         round_layer = pdk.Layer(
             'PathLayer',
             #            positionFormat= 'XY',
-            data=[{'path': [[cur_round.start_longitude, cur_round.start_latitude]]
-                           + [[ps.Parcels.get_parcel(el).delivery_longitude,
-                               ps.Parcels.get_parcel(el).delivery_latitude] for el in cur_round.parcel_ids]
-                           + [[cur_round.end_longitude, cur_round.end_latitude]]}],
+            data=[{'path': format_path}],
             get_width=30,
             #            width_scale=20,
             get_path='path',

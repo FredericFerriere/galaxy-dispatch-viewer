@@ -12,11 +12,11 @@ def view_model(cur_model:model):
         col_data, col_map = st.columns([1,2])
         with col_data:
             msv.view_model_stats(cur_model)
-            df_client_rounds = st.dataframe(cur_model.client_round_df(), hide_index=True,
+            df_client_task = st.dataframe(cur_model.client_round_task_df(), hide_index=True,
                                             selection_mode="multi-row", on_select="rerun")
         with col_map:
-            sel_rounds = [cur_model.client_round_df().iloc[sel]['round_id'] for sel in df_client_rounds.selection['rows']]
-            rv.view_rounds(cur_model, sel_rounds)
+            sel_tasks = [cur_model.client_round_task_df().iloc[sel]['task_id'] for sel in df_client_task.selection['rows']]
+            rv.view_rounds(cur_model, sel_tasks)
 
     with mod_anim:
         st.text("animation")

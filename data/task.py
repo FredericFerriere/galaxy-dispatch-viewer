@@ -18,6 +18,8 @@ class TaskType(Enum):
 
 class Task:
 
+    task_type = TaskType.GENERIC
+
     def __init__(self, task_id, start_location: l.Location, end_location: l.Location, agent_id):
         self.id = task_id
         self.start_location = start_location
@@ -40,6 +42,8 @@ class Collection(Task):
     he loads merchandise into the trailer, then rides to the nearest bus stop and loads bike trailer into bus trailer
     """
 
+    task_type = TaskType.COLLECTION
+
     def __init__(self, task_id, start_location, end_location, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
         self.distance = 0
@@ -51,6 +55,8 @@ class Collection(Task):
 
 class LocalRound(Task):
 
+    task_type = TaskType.LOCAL_ROUND
+
     def __init__(self, task_id, start_location, end_location, delivery_round_id, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
         self.delivery_round_id = delivery_round_id
@@ -61,6 +67,8 @@ class LocalRound(Task):
 
 
 class ImportedRound(Task):
+
+    task_type = TaskType.IMPORTED_ROUND
 
     def __init__(self, task_id, start_location, end_location, delivery_round_id, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
@@ -74,6 +82,8 @@ class ImportedRound(Task):
 
 class ReturnTrailer(Task):
 
+    task_type = TaskType.RETURN_TRAILER
+
     def __init__(self, task_id, start_location, agent_id):
         super().__init__(task_id, start_location, start_location, agent_id)
         self.distance = 0
@@ -82,6 +92,8 @@ class ReturnTrailer(Task):
 
 class ReceiveTrailer(Task):
 
+    task_type = TaskType.RECEIVE_TRAILER
+
     def __init__(self, task_id, start_location, agent_id):
         super().__init__(task_id, start_location, start_location, agent_id)
         self.distance = 0
@@ -89,6 +101,8 @@ class ReceiveTrailer(Task):
 
 
 class SendTrailer(Task):
+
+    task_type = TaskType.SEND_TRAILER
 
     def __init__(self, task_id, start_location, end_location, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
@@ -99,6 +113,9 @@ class SendTrailer(Task):
 
 
 class StoreTrailer(Task):
+
+    task_type = TaskType.STORE_TRAILER
+
     def __init__(self, task_id, start_location, end_location, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
         self.distance = 0
@@ -108,6 +125,8 @@ class StoreTrailer(Task):
 
 
 class RouteTrailer(Task):
+
+    task_type = TaskType.ROUTE_TRAILER
 
     def __init__(self, task_id, start_location, end_location, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
@@ -122,6 +141,8 @@ class RouteTrailer(Task):
 
 class ReturnStoreTrailer(Task):
 
+    task_type = TaskType.RETURN_STORE_TRAILER
+
     def __init__(self, task_id, start_location, end_location, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
         self.distance = 0
@@ -129,6 +150,9 @@ class ReturnStoreTrailer(Task):
 
 
 class TransitionRide(Task):
+
+    task_type = TaskType.TRANSITION_RIDE
+
     def __init__(self, task_id, start_location, end_location, agent_id):
         super().__init__(task_id, start_location, end_location, agent_id)
         self.distance = 0
