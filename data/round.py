@@ -16,7 +16,6 @@ class Round:
     def get_path(self, cur_model, move_mode):
         prev_lat, prev_lon = self.start_latitude, self.start_longitude
         path = []
-
         for el in self.parcel_ids:
             cur_lat, cur_lon = ps.Parcels.get_parcel(el).delivery_latitude, ps.Parcels.get_parcel(el).delivery_longitude
             new_path = cur_model.get_path(prev_lat, prev_lon, cur_lat, cur_lon, move_mode)

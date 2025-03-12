@@ -66,9 +66,9 @@ def get_rounds_layer(current_model, task_ids):
     for t_id in task_ids:
         cur_task = current_model.get_task(t_id)
         cur_round = current_model.get_round(cur_task.delivery_round_id)
+
         lat_lon_path = cur_round.get_path(current_model, current_model.get_agent(cur_task.agent_id).move_mode)
         format_path = [[el['start_lon'], el['start_lat']] for el in lat_lon_path]
-
         round_layer = pdk.Layer(
             'PathLayer',
             #            positionFormat= 'XY',
